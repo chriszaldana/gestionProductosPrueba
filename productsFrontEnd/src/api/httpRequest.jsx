@@ -9,8 +9,8 @@ export const getUsersApi = async () => {
       'Authorization': `Bearer ${token}`
     }
   })
-  console.log("Usuario autenticado:",response.data);
-  return response.data;
+  console.log("Usuario autenticado:",response.data.user);
+  return response.data.user;
 }
 
 export const getProductsApi = async () => {

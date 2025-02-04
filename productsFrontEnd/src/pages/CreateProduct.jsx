@@ -7,8 +7,8 @@ const CreateProduct = () => {
 
     const [formData, setFormData] = useState({
         name: '',
-        user_id: null,
-        description: '',
+        user_id: '',
+        description: null,
         price: '',
         stock: ''
     })
@@ -18,15 +18,12 @@ const CreateProduct = () => {
         const fetchUser = async () => {
             try {
                 const user = await getUsersApi();
-                if (user && user.id){
-                    console.log("Usuario autenticado:", user.id);
+                console.log("Usuario autenticado:", user.id);
                     setFormData(prevState => ({
                         ...prevState,
                         user_id: user.id
                     }))
-                }else{
-                    console.error("Usuario no autenticado");
-                }
+                
                 
             } catch (error) {
                 console.error("Error obteniendo el usuario:", error);
