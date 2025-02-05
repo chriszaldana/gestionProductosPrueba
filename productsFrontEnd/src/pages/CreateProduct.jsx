@@ -1,38 +1,21 @@
 import { Link } from 'react-router-dom'
-import { createProductApi, getUsersApi } from '../api/httpRequest'
-import { useState, useEffect } from 'react'
+import { createProductApi} from '../api/httpRequest'
+import { useState, useContext } from 'react'
+import { MyAppContext } from '../context/MyAppContext'
 
 
 const CreateProduct = () => {
 
+    const {user, token} = useContext(MyAppContext) 
+
     const [formData, setFormData] = useState({
         name: '',
-        user_id: '',
-        description: null,
+        user_id: user.id,
+        description: '',
         price: '',
         stock: ''
     })
 
-    useEffect(() => {
-        
-        const fetchUser = async () => {
-            try {
-                const user = await getUsersApi();
-                console.log("Usuario autenticado:", user.id);
-                    setFormData(prevState => ({
-                        ...prevState,
-                        user_id: user.id
-                    }))
-                
-                
-            } catch (error) {
-                console.error("Error obteniendo el usuario:", error);
-            }
-            
-        }
-        fetchUser();
-
-    }, [])
 
     const handleChange = (e) => {
         const {id, value} = e.target;
@@ -58,7 +41,7 @@ const CreateProduct = () => {
             }
             console.log("Enviando producto: ", productData);
 
-            const response = await createProductApi(productData)
+            const response = await createProductApi(productData, token)
             console.log("Respuesta de API: ",response);
             alert('Producto creado con éxito');
             setFormData(({
@@ -117,7 +100,7 @@ const CreateProduct = () => {
             />
             </div>
             <button type="submit" className="btn btn-primary">Crear</button>
-            <Link to={'/'} className="btn btn-success ms-2">Cancelar</Link>
+            <Link to={'/'} className="btn btn-danger ms-2">Cancelar</Link>
         </form>
     </div>
   )
