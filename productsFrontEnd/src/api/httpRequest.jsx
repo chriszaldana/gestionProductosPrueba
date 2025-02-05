@@ -48,3 +48,14 @@ export const loginUser = async (user) => {
 
   return response.data
 }
+
+export const logoutUser = async (token) =>{
+  const url = 'http://127.0.0.1:8000/api/logout'
+  const response = await axios.post(url,{}, {
+    headers: {
+      'Authorization':  `Bearer ${token}`
+    }
+  })
+
+  return response.data
+}
